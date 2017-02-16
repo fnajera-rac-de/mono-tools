@@ -63,6 +63,7 @@ namespace Gendarme.Framework {
 		public Defect (IRule rule, IMetadataTokenProvider target, MethodDefinition location, Instruction ins, Severity severity, Confidence confidence, string text)
 			: this (rule, target, location, severity, confidence, text)
 		{
+			Method = location;
 			Instruction = ins;
 		}
 
@@ -80,7 +81,14 @@ namespace Gendarme.Framework {
 			private set;
 		}
 
-		public Instruction Instruction {
+		public MethodDefinition Method
+		{
+			get;
+			private set;
+		}
+
+		public Instruction Instruction
+		{
 			get;
 			private set;
 		}
