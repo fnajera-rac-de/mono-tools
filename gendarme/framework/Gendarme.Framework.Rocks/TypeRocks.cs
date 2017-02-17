@@ -332,6 +332,15 @@ namespace Gendarme.Framework.Rocks {
 			if (self == null)
 				return false;
 
+			// NOTE: self.Name does not always give the right name:
+			// - OptionalModifierType adds ' modopt(...)' to the name!
+			if (self is OptionalModifierType)
+				return IsNamed(((OptionalModifierType) self).ElementType, nameSpace, name);
+			// - RequiredModifierType adds ' modreq(...)' to the name!
+			if (self is RequiredModifierType)
+				return IsNamed(((RequiredModifierType) self).ElementType, nameSpace, name);
+			// - ArrayType adds '[]' or similar, but in that case, the type is really different (it's an array)
+
 			if (self.IsNested) {
 				int spos = name.LastIndexOf ('/');
 				if (spos == -1)
@@ -356,6 +365,15 @@ namespace Gendarme.Framework.Rocks {
 				throw new ArgumentNullException ("fullName");
 			if (self == null)
 				return false;
+
+			// NOTE: self.Name does not always give the right name:
+			// - OptionalModifierType adds ' modopt(...)' to the name!
+			if (self is OptionalModifierType)
+				return IsNamed(((OptionalModifierType) self).ElementType, fullName);
+			// - RequiredModifierType adds ' modreq(...)' to the name!
+			if (self is RequiredModifierType)
+				return IsNamed(((RequiredModifierType) self).ElementType, fullName);
+			// - ArrayType adds '[]' or similar, but in that case, the type is really different (it's an array)
 
 			if (self.IsNested) {
 				int spos = fullName.LastIndexOf ('/');
